@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFRIKAN MOTO - Vente de Motos en Côte d'Ivoire</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                        },
+                        dark: {
+                            900: '#0a0a0c',
+                            800: '#121216',
+                            700: '#1a1a21',
+                            600: '#262631'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Styles personnalisés et animations pour finitions premium */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0c;
+            color: #f3f4f6;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-bg-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        .gold-bg-gradient:hover {
+            background: linear-gradient(135deg, #fbbf24 0%, #b45309 100%);
+        }
+        .card-glass {
+            background: rgba(18, 18, 22, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .modal-glass {
+            background: rgba(10, 10, 12, 0.95);
+            backdrop-filter: blur(16px);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262631;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #eab308;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-amber-500 selection:text-black">
+
+    <!-- ========================================== -->
+    <!-- HEADER & NAVIGATION -->
+    <!-- ========================================== -->
+    <header class="sticky top-0 z-40 w-full border-b border-white/10 card-glass transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- LOGO AFRIKAN MOTO -->
+                <a href="#accueil" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-xl gold-bg-gradient flex items-center justify-center text-black font-black text-2xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid font-bold">AM</i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl font-black tracking-wider text-white group-hover:text-amber-400 transition-colors">AFRIKAN<span class="text-amber-500"> MOTO</span></span>
+                        <span class="text-[10px] uppercase tracking-widest text-gray-400">Côte d'Ivoire</span>
+                    </div>
+                </a>
+
+                <!-- NAV DESKTOP -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+                    <a href="#accueil" class="text-gray-300 hover:text-amber-400 transition-colors">Accueil</a>
+                    <a href="#motos" class="text-gray-300 hover:text-amber-400 transition-colors">Nos Motos</a>
+                    <a href="#dashboard-section" class="text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-lock text-xs mr-1"></i> Espace Admin
+                    </a>
+                    <a href="#avantages" class="text-gray-300 hover:text-amber-400 transition-colors">Pourquoi Nous ?</a>
+                    <a href="#contact" class="text-gray-300 hover:text-amber-400 transition-colors">Contact</a>
+                </nav>
+
+                <!-- BOUTON D'ACTION QUICK CALL / CATALOGUE -->
+                <div class="hidden sm:flex items-center gap-3">
+                    <button onclick="protectedAdminAction(() => openAddMotoModal())" class="px-4 py-2 text-sm font-bold text-amber-400 border border-amber-500/40 rounded-lg hover:bg-amber-500/10 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-lock text-xs"></i> <i class="fa-solid fa-plus-circle"></i> Ajouter Moto
+                    </button>
+                    <button onclick="scrollToCatalogue()" class="px-5 py-2.5 text-sm font-bold text-black rounded-lg gold-bg-gradient shadow-md shadow-amber-500/10 hover:shadow-amber-500/25 transition-all">
+                        <i class="fa-solid fa-motorcycle mr-2"></i> Voir les modèles
+                    </button>
+                </div>
+
+                <!-- MENU MOBILE HAMBURGER -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" type="button" class="text-gray-300 hover:text-amber-400 focus:outline-none p-2" aria-label="Menu Mobile">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MENU MOBILE DROPDOWN -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-white/10 bg-dark-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#accueil" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-amber-400 font-medium">Accueil</a>
+            <a href="#motos" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-amber-400 font-medium">Nos Motos</a>
+            <a href="#dashboard-section" onclick="toggleMobileMenu()" class="block py-2 text-amber-400 font-medium"><i class="fa-solid fa-lock text-xs mr-1"></i>Espace Admin</a>
+            <a href="#avantages" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-amber-400 font-medium">Pourquoi Nous ?</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-amber-400 font-medium">Contact</a>
+            <button onclick="protectedAdminAction(() => openAddMotoModal()); toggleMobileMenu();" class="w-full py-2.5 text-center text-sm font-bold text-amber-400 border border-amber-500/40 rounded-lg bg-dark-700">
+                <i class="fa-solid fa-lock text-xs mr-1"></i> Ajouter un modèle
+            </button>
+            <button onclick="scrollToCatalogue(); toggleMobileMenu();" class="w-full mt-2 py-3 text-center text-sm font-bold text-black rounded-lg gold-bg-gradient">
+                <i class="fa-solid fa-motorcycle mr-2"></i> Découvrir les motos
+            </button>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- SECTION HERO / BANNIÈRE D'ACCUEIL -->
+    <!-- ========================================== -->
+    <section id="accueil" class="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-white/10">
+        <!-- Image de fond avec overlay sombre -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=2000" alt="Moto d'exception Côte d'Ivoire" class="w-full h-full object-cover opacity-30 scale-105 animate-pulse" style="animation-duration: 10s;">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/80 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+            <span class="inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/30 uppercase mb-6">
+                ⚡ Le N°1 de la Moto • 🚚 LIVRAISON 100% GRATUITE PARTOUT EN CÔTE D'IVOIRE 🇨🇮
+            </span>
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-tight mb-6">
+                Votre prochaine moto <br class="hidden sm:inline"><span class="gold-gradient-text">vous attend.</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-base sm:text-xl text-gray-300 mb-10 font-normal leading-relaxed">
+                Achetez votre moto neuve ou d'occasion aux meilleurs prix à Abidjan, Bouaké, Yamoussoukro, San-Pédro et **partout en Côte d'Ivoire**. Qualité garantie, **livraison offerte sur 100% du territoire ivoirien** !
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="scrollToCatalogue()" class="w-full sm:w-auto px-8 py-4 text-base font-bold text-black rounded-xl gold-bg-gradient shadow-xl shadow-amber-500/20 hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-motorcycle mr-2"></i> Découvrir nos motos
+                </button>
+                <a href="#dashboard-section" class="w-full sm:w-auto px-8 py-4 text-base font-bold text-white rounded-xl bg-dark-700 hover:bg-dark-600 border border-white/15 transition-all">
+                    <i class="fa-solid fa-lock text-amber-400 mr-2"></i> Espace Administrateur
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION CATALOGUE DES MOTOS -->
+    <!-- ========================================== -->
+    <section id="motos" class="py-20 bg-dark-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-amber-400 mb-2">Catalogue Officiel</h2>
+                    <h3 class="text-3xl sm:text-4xl font-black text-white">Nos Modèles Disponibles</h3>
+                </div>
+                <button onclick="protectedAdminAction(() => openAddMotoModal())" class="px-5 py-3 font-bold text-sm text-amber-400 bg-dark-800 border border-amber-500/40 rounded-xl hover:bg-amber-500/10 transition-all flex items-center gap-2 self-start md:self-auto">
+                    <i class="fa-solid fa-lock text-xs"></i> <i class="fa-solid fa-plus-circle text-lg"></i> Ajouter un modèle au catalogue
+                </button>
+            </div>
+
+            <!-- GRID DYNAMIQUE DES MOTOS -->
+            <div id="motos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Généré dynamiquement en JS par renderCatalogue() -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION DASHBOARD ADMINISTRATEUR -->
+    <!-- ========================================== -->
+    <section id="dashboard-section" class="py-16 bg-dark-900 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- EN-TÊTE DASHBOARD -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-6 border-b border-white/10 gap-4">
+                <div>
+                    <span class="text-xs uppercase font-bold text-amber-400 tracking-widest flex items-center gap-2 mb-1">
+                        <i class="fa-solid fa-lock text-xs"></i> Espace Administrateur Sécurisé
+                    </span>
+                    <h2 class="text-3xl font-black text-white flex items-center gap-3">
+                        <i class="fa-solid fa-chart-pie text-amber-400"></i> Tableau de Bord des Commandes
+                    </h2>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="protectedAdminAction(() => resetOrdersList())" class="px-4 py-2.5 rounded-xl bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/40 font-bold text-xs transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-rotate-left"></i> Remettre à zéro (0 Commande)
+                    </button>
+                    <button onclick="protectedAdminAction(() => openAddMotoModal())" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-all shadow-lg flex items-center gap-2">
+                        <i class="fa-solid fa-plus-circle"></i> Ajouter un produit
+                    </button>
+                </div>
+            </div>
+
+            <!-- CARTES STATISTIQUES EN DIRECT -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="card-glass p-6 rounded-2xl border border-white/10">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-gray-400 font-semibold uppercase">Commandes Totales</span>
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
+                            <i class="fa-solid fa-boxes-packing text-lg"></i>
+                        </div>
+                    </div>
+                    <span id="dash-stat-count" class="text-3xl font-black text-white">0</span>
+                    <span class="text-[11px] text-gray-400 block mt-1">Reçues depuis le site</span>
+                </div>
+
+                <div class="card-glass p-6 rounded-2xl border border-white/10">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-gray-400 font-semibold uppercase">Volume des Ventes</span>
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                            <i class="fa-solid fa-money-bill-wave text-lg"></i>
+                        </div>
+                    </div>
+                    <span id="dash-stat-total" class="text-2xl font-black text-emerald-400">0 FCFA</span>
+                    <span class="text-[11px] text-gray-400 block mt-1">Chiffre d'affaires estimé</span>
+                </div>
+
+                <div class="card-glass p-6 rounded-2xl border border-white/10">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-gray-400 font-semibold uppercase">Motos en Stock</span>
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
+                            <i class="fa-solid fa-motorcycle text-lg"></i>
+                        </div>
+                    </div>
+                    <span id="dash-stat-motos" class="text-3xl font-black text-white">0</span>
+                    <span class="text-[11px] text-gray-400 block mt-1">Modèles au catalogue</span>
+                </div>
+
+                <div class="card-glass p-6 rounded-2xl border border-white/10">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-gray-400 font-semibold uppercase">Bestseller</span>
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                            <i class="fa-solid fa-fire text-lg"></i>
+                        </div>
+                    </div>
+                    <span id="dash-stat-top" class="text-lg font-bold text-white truncate block">-</span>
+                    <span class="text-[11px] text-gray-400 block mt-1">Plus demandée</span>
+                </div>
+            </div>
+
+            <!-- TABLEAU DES COMMANDES REÇUES -->
+            <div class="card-glass rounded-3xl overflow-hidden border border-white/10">
+                <div class="p-6 bg-dark-800 border-b border-white/10 flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-amber-400"></i> Historique des Commandes Clients
+                    </h3>
+                    <span class="text-xs text-gray-400">Chaque commande s'ajoute automatiquement ici</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-dark-900/80 border-b border-white/10 text-[11px] uppercase tracking-wider text-gray-400">
+                                <th class="py-4 px-6">Réf / Date</th>
+                                <th class="py-4 px-6">Client & Contact</th>
+                                <th class="py-4 px-6">Localisation</th>
+                                <th class="py-4 px-6">Moto & Qté</th>
+                                <th class="py-4 px-6">Montant Total</th>
+                                <th class="py-4 px-6">Paiement</th>
+                                <th class="py-4 px-6 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body" class="divide-y divide-white/5 text-sm text-gray-300">
+                            <!-- Les commandes s'afficheront ici -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Message si aucune commande -->
+                <div id="no-orders-msg" class="p-12 text-center text-gray-500">
+                    <i class="fa-solid fa-inbox text-4xl mb-3 block text-gray-600"></i>
+                    <p class="font-medium text-base">Aucune commande pour le moment.</p>
+                    <p class="text-xs text-gray-400 mt-1">Le tableau de bord est réinitialisé à zéro. Passez une commande de test pour voir l'affichage immédiat.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION À PROPOS -->
+    <!-- ========================================== -->
+    <section id="apropos" class="py-20 bg-dark-800/40 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div class="rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=1000" alt="AFRIKAN MOTO Showroom" class="w-full h-[400px] object-cover">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 hidden sm:block bg-dark-900 border border-amber-500/30 p-6 rounded-2xl shadow-xl max-w-xs">
+                        <p class="text-amber-400 font-bold text-lg mb-1">Service Clientèle 7j/7</p>
+                        <p class="text-xs text-gray-400">Assistance rapide par appel direct ou via WhatsApp.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <h2 class="text-xs uppercase tracking-widest text-amber-400 font-bold">À propos de AFRIKAN MOTO</h2>
+                    <h3 class="text-3xl sm:text-4xl font-black text-white">Le spécialiste de la moto fiable en Côte d'Ivoire</h3>
+                    <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+                        <strong>AFRIKAN MOTO</strong> s'impose comme une référence incontournable de la vente d'engins à deux roues en Côte d'Ivoire. Notre mission est de fournir à nos clients des motos performantes, économiques et parfaitement adaptées au réseau routier ivoirien.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed text-sm">
+                        Que ce soit pour le travail au quotidien, les courses urbaines ou les longs déplacements, nous garantissons des véhicules scrupuleusement inspectés, des prix transparents et une expérience d'achat directe sans intermédiaire inutile.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-truck-fast text-amber-400 text-lg"></i>
+                            <span class="text-sm font-semibold text-white">Livraison 100% Gratuite</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
+                            <span class="text-sm font-semibold text-white">Service Après-Vente</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
+                            <span class="text-sm font-semibold text-white">Transparence Prix</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
+                            <span class="text-sm font-semibold text-white">Support Réactif</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION CONTACT & LOCALISATION -->
+    <!-- ========================================== -->
+    <section id="contact" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-amber-400 font-bold mb-2">Contactez-nous</h2>
+                <h3 class="text-3xl font-black text-white">Des questions ? Nous sommes à votre écoute</h3>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Contact 1 -->
+                <div class="card-glass p-8 rounded-2xl text-center flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">Téléphone & WhatsApp</h4>
+                    <p class="text-gray-400 text-sm mb-4">Disponible tous les jours</p>
+                    <a href="https://wa.me/2250585878013" target="_blank" class="text-amber-400 font-bold hover:underline text-lg">
+                        +225 05 85 87 80 13
+                    </a>
+                </div>
+
+                <!-- Contact 2 -->
+                <div class="card-glass p-8 rounded-2xl text-center flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">Zone de Couverture</h4>
+                    <p class="text-gray-400 text-sm mb-4">Point de vente principal</p>
+                    <span class="text-white font-semibold text-base">
+                        Abidjan, Côte d'Ivoire
+                    </span>
+                    <span class="text-xs text-gray-400 mt-1">Expédition possible dans toutes les communes & villes</span>
+                </div>
+
+                <!-- Contact 3 -->
+                <div class="card-glass p-8 rounded-2xl text-center flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">Horaires d'Ouverture</h4>
+                    <p class="text-gray-400 text-sm mb-4">Service commercial</p>
+                    <span class="text-white font-medium text-sm">Lundi - Samedi : 08h00 - 19h00</span>
+                    <span class="text-amber-400 font-medium text-sm mt-1">Dimanche : Sur rendez-vous</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- FOOTER / PIED DE PAGE -->
+    <!-- ========================================== -->
+    <footer class="bg-dark-900 border-t border-white/10 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                
+                <div class="md:col-span-2 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl gold-bg-gradient flex items-center justify-center text-black font-black text-xl">
+                            AM
+                        </div>
+                        <span class="text-xl font-black text-white">AFRIKAN <span class="text-amber-500">MOTO</span></span>
+                    </div>
+                    <p class="text-sm text-gray-400 max-w-sm">
+                        Vente de motos neuves et d'occasion de première qualité en Côte d'Ivoire. Commande simple, traitement instantané sur WhatsApp et livraison sécurisée.
+                    </p>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Navigation</h5>
+                    <ul class="space-y-2.5 text-sm text-gray-400">
+                        <li><a href="#accueil" class="hover:text-amber-400 transition-colors">Accueil</a></li>
+                        <li><a href="#motos" class="hover:text-amber-400 transition-colors">Catalogue Motos</a></li>
+                        <li><a href="#avantages" class="hover:text-amber-400 transition-colors">Nos Avantages</a></li>
+                        <li><a href="#apropos" class="hover:text-amber-400 transition-colors">À propos</a></li>
+                        <li><a href="#contact" class="hover:text-amber-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Paiements Acceptés</h5>
+                    <div class="flex flex-wrap gap-2 text-xs text-gray-300">
+                        <span class="px-3 py-1.5 rounded bg-dark-800 border border-white/10 font-medium">Wave CI</span>
+                        <span class="px-3 py-1.5 rounded bg-dark-800 border border-white/10 font-medium">Orange Money</span>
+                        <span class="px-3 py-1.5 rounded bg-dark-800 border border-white/10 font-medium">MTN MoMo</span>
+                        <span class="px-3 py-1.5 rounded bg-dark-800 border border-white/10 font-medium">Espèces à la livraison</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+                <p>&copy; 2026 AFRIKAN MOTO - Tous droits réservés. Côte d'Ivoire.</p>
+                <p>Commandes envoyées directement au <a href="https://wa.me/2250585878013" class="text-amber-400 hover:underline">+225 05 85 87 80 13</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- BOUTON WHATSAPP FLOTTANT -->
+    <!-- ========================================== -->
+    <a href="https://wa.me/2250585878013?text=Bonjour%20AFRIKAN%20MOTO%20!%20Je%20souhaite%20avoir%20des%20informations%20sur%20vos%20motos." 
+       target="_blank" 
+       rel="noopener noreferrer"
+       class="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
+       title="Discuter sur WhatsApp">
+        <i class="fa-brands fa-whatsapp text-3xl"></i>
+        <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap text-sm font-bold pl-0 group-hover:pl-2">
+            Discuter sur WhatsApp
+        </span>
+    </a>
+
+    <!-- ========================================== -->
+    <!-- MODAL DU FORMULAIRE DE COMMANDE COMPLETE -->
+    <!-- ========================================== -->
+    <div id="order-modal" class="fixed inset-0 z-50 hidden overflow-y-auto modal-glass flex items-center justify-center p-4">
+        <div class="relative w-full max-w-3xl bg-dark-900 border border-white/10 rounded-3xl shadow-2xl overflow-hidden my-8">
+            
+            <!-- Modal Header -->
+            <div class="bg-dark-800 px-6 py-5 border-b border-white/10 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl gold-bg-gradient flex items-center justify-center text-black font-black text-lg">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Formulaire de Commande</h3>
+                        <p class="text-xs text-amber-400">AFRIKAN MOTO • Validation sur WhatsApp</p>
+                    </div>
+                </div>
+                <button onclick="closeOrderModal()" class="w-9 h-9 rounded-full bg-dark-700 hover:bg-dark-600 text-gray-400 hover:text-white flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Form Content EN NOIR -->
+            <form id="order-form" onsubmit="submitOrderToWhatsApp(event)" class="p-6 space-y-6 bg-dark-900">
+                
+                <!-- SECTION 1 : INFORMATIONS CLIENT -->
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400 border-b border-white/10 pb-2 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-user"></i> 1. Informations Personnelles du Client
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Nom de famille <span class="text-red-500">*</span></label>
+                            <input type="text" id="cust-lastname" required placeholder="Ex: KOUASSI" class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Prénom(s) <span class="text-red-500">*</span></label>
+                            <input type="text" id="cust-firstname" required placeholder="Ex: Jean-Marc" class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Numéro Téléphone <span class="text-red-500">*</span></label>
+                            <input type="tel" id="cust-phone" required placeholder="Ex: 0708091011" class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Adresse E-mail <span class="text-gray-500">(Facultative)</span></label>
+                            <input type="email" id="cust-email" placeholder="exemple@mail.com" class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Pays</label>
+                            <input type="text" id="cust-country" value="Côte d'Ivoire" readonly class="w-full bg-dark-700 border border-white/10 rounded-xl px-4 py-3 text-sm text-gray-400 cursor-not-allowed">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Ville / Commune <span class="text-red-500">*</span></label>
+                            <input type="text" id="cust-city" required placeholder="Ex: Abidjan (Yopougon, Cocody, etc.)" class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Quartier <span class="text-red-500">*</span></label>
+                            <input type="text" id="cust-neighborhood" required placeholder="Ex: Selmer / Riviera 3" class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none">
+                        </div>
+
+                        <div id="address-container">
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Adresse de livraison <span id="address-req" class="text-red-500">*</span></label>
+                            <input type="text" id="cust-address" required placeholder="Rue / Numéro de rue / Bâtiment" class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none">
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Repères d'indication <span class="text-gray-500">(Facultatif)</span></label>
+                            <input type="text" id="cust-landmark" placeholder="Ex: En face de la pharmacie, près du pharmacie du rond-point" class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2 : DÉTAILS DE LA COMMANDE ET CALCULS -->
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400 border-b border-white/10 pb-2 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-motorcycle"></i> 2. Détails de la Moto Choisie
+                    </h4>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-dark-800 p-4 rounded-2xl border border-white/5 mb-4">
+                        <div>
+                            <span class="block text-xs text-gray-400">Modèle sélectionné</span>
+                            <input type="text" id="order-moto-name" readonly class="bg-transparent text-white font-bold text-lg focus:outline-none w-full">
+                        </div>
+
+                        <div>
+                            <span class="block text-xs text-gray-400">Prix unitaire</span>
+                            <input type="hidden" id="order-unit-price-val">
+                            <span id="order-unit-price-display" class="block font-bold text-amber-400 text-lg">0 FCFA</span>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Quantité <span class="text-red-500">*</span></label>
+                            <input type="number" id="order-quantity" min="1" max="50" value="1" onchange="recalculateTotal()" oninput="recalculateTotal()" class="w-full bg-dark-900 border border-amber-500/40 rounded-lg px-3 py-1.5 text-white font-bold text-center focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Couleur souhaitée <span class="text-gray-500">(si disponible)</span></label>
+                            <select id="order-color" class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none">
+                                <option value="Non spécifiée / Standard">Standard / Selon disponibilité</option>
+                                <option value="Noir Mat">Noir Mat</option>
+                                <option value="Rouge Sport">Rouge Sport</option>
+                                <option value="Bleu Métallisé">Bleu Métallisé</option>
+                                <option value="Blanc Pur">Blanc Pur</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Mode de Réception <span class="text-red-500">*</span></label>
+                            <select id="order-reception" onchange="handleReceptionChange()" class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none">
+                                <option value="Livraison à domicile (GRATUITE Partout en Côte d'Ivoire)">Livraison à domicile (100% GRATUITE en CI 🚚)</option>
+                                <option value="Retrait en point de vente">Retrait en point de vente (Abidjan)</option>
+                            </select>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Mode de Paiement Souhaité <span class="text-red-500">*</span></label>
+                            <select id="order-payment" class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none">
+                                <option value="Orange Money">Orange Money</option>
+                                <option value="MTN Money">MTN Money</option>
+                                <option value="Wave">Wave</option>
+                                <option value="Paiement à la livraison">Paiement à la livraison (selon zone)</option>
+                                <option value="Autre mode à confirmer">Autre mode à confirmer avec le vendeur</option>
+                            </select>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Commentaires ou précisions supplémentaires</label>
+                            <textarea id="order-comments" rows="2" placeholder="Heure souhaitée pour la livraison, questions sur l'immatriculation, etc." class="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-amber-400 focus:outline-none"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION RECAPITULATIF ET PRIX TOTAL -->
+                <div class="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-5 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">Total Estimatif</span>
+                            <span class="text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+                                <i class="fa-solid fa-truck-fast mr-1"></i>LIVRAISON GRATUITE (0 FCFA)
+                            </span>
+                        </div>
+                        <div id="order-total-price" class="text-3xl font-black text-white">0 FCFA</div>
+                        <p class="text-[11px] text-gray-400 mt-1">
+                            * Aucun frais de livraison ! La livraison est 100% offerte partout en Côte d'Ivoire.
+                        </p>
+                    </div>
+
+                    <button type="submit" class="w-full sm:w-auto px-8 py-4 font-black text-black bg-emerald-500 hover:bg-emerald-400 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3 text-base">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i>
+                        Envoyer ma commande sur WhatsApp
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL DE CODE D'ACCÈS ADMINISTRATEUR -->
+    <!-- ========================================== -->
+    <div id="auth-modal" class="fixed inset-0 z-50 hidden overflow-y-auto modal-glass flex items-center justify-center p-4">
+        <div class="relative w-full max-w-md bg-dark-900 border border-amber-500/30 rounded-3xl shadow-2xl overflow-hidden p-6 text-center">
+            <div class="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            
+            <h3 class="text-xl font-black text-white mb-1">Authentification Admin</h3>
+            <p class="text-xs text-gray-400 mb-6">Veuillez saisir votre code d'accès administrateur pour effectuer cette modification.</p>
+
+            <form onsubmit="verifyAdminCode(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="admin-passcode-input" required placeholder="Saisir le code d'accès (ex: 1234)" autofocus class="w-full bg-dark-800 border border-white/20 rounded-xl px-4 py-3.5 text-center text-lg text-amber-400 font-mono tracking-widest focus:border-amber-400 focus:outline-none">
+                    <p id="auth-error-msg" class="text-xs text-red-400 mt-2 hidden font-semibold">
+                        <i class="fa-solid fa-triangle-exclamation mr-1"></i> Code d'accès incorrect !
+                    </p>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeAuthModal()" class="w-1/2 py-3 text-xs font-bold text-gray-400 bg-dark-800 border border-white/10 rounded-xl hover:bg-dark-700">
+                        Annuler
+                    </button>
+                    <button type="submit" class="w-1/2 py-3 text-xs font-bold text-black gold-bg-gradient rounded-xl shadow-lg">
+                        Valider
+                    </button>
+                </div>
+            </form>
+            <p class="text-[10px] text-gray-500 mt-4">Code d'accès par défaut : <span class="font-mono font-bold text-amber-400">1234</span></p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT & LOGIQUE APPLICATION -->
+    <!-- ========================================== -->
+    <script>
+        // CODE D'ACCÈS ADMINISTRATEUR (Par défaut: 1234)
+        const ADMIN_CODE = "1234";
+        let pendingAdminAction = null;
+        let isAdminAuthenticated = false;
+
+        // NUMÉRO WHATSAPP DU VENDEUR (Format International Côte d'Ivoire)
+        const SELLER_WHATSAPP = "2250585878013";
+
+        // Image par défaut pour les motos sans fichier choisi
+        const DEFAULT_MOTO_IMG = "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&q=80&w=800";
+
+        // BASE DE DONNÉES DES MOTOS
+        let catalogueMotos = [
+            {
+                id: 1,
+                name: "TVS ROCK",
+                price: 650000,
+                image: DEFAULT_MOTO_IMG,
+                description: "Modèle populaire réputé pour sa puissance, son confort de conduite et son excellente résistance à l'usure.",
+                specs: ["Moteur 4 temps performant", "Consommation très réduite", "Freinage sécurisé", "Siège ergonomique"],
+                stock: "En stock"
+            },
+            {
+                id: 2,
+                name: "APACHE RTR 160",
+                price: 950000,
+                image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=800",
+                description: "Moto sportive au design agressif pour une tenue de route irréprochable en ville comme sur autoroute.",
+                specs: ["Moteur 160cc réactif", "Tableau de bord digital", "Jantes alliage de luxe", "Suspension renforcée"],
+                stock: "En stock"
+            },
+            {
+                id: 3,
+                name: "HAOJUE KA 150",
+                price: 780000,
+                image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800",
+                description: "Véritable bourreau de travail, élégante et idéalement calibrée pour l'endurance urbaine.",
+                specs: ["Grande robustesse", "Réservoir longue autonomie", "Éclairage LED puissant", "Entretien économique"],
+                stock: "Sur commande"
+            }
+        ];
+
+        // BASE DE DONNÉES DES COMMANDES
+        let ordersList = [];
+
+        // GESTION DE LA SÉCURITÉ / CODE D'ACCÈS ADMIN
+        function protectedAdminAction(actionCallback) {
+            if (isAdminAuthenticated) {
+                actionCallback();
+            } else {
+                pendingAdminAction = actionCallback;
+                document.getElementById('admin-passcode-input').value = '';
+                document.getElementById('auth-error-msg').classList.add('hidden');
+                document.getElementById('auth-modal').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function verifyAdminCode(event) {
+            event.preventDefault();
+            const enteredCode = document.getElementById('admin-passcode-input').value.trim();
+            
+            if (enteredCode === ADMIN_CODE) {
+                isAdminAuthenticated = true;
+                closeAuthModal();
+                if (pendingAdminAction) {
+                    pendingAdminAction();
+                    pendingAdminAction = null;
+                }
+            } else {
+                document.getElementById('auth-error-msg').classList.remove('hidden');
+            }
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Rendu initial
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCatalogue();
+            renderDashboard();
+        });
+
+        // Formater les montants en FCFA
+        function formatFCFA(amount) {
+            return new Intl.NumberFormat('fr-FR').format(amount) + " FCFA";
+        }
+
+        // Remettre le tableau de bord à zéro
+        function resetOrdersList() {
+            if (ordersList.length === 0 || confirm("Voulez-vous vraiment remettre le tableau de bord à zéro ?")) {
+                ordersList = [];
+                renderDashboard();
+            }
+        }
+
+        // SUPPRIMER UNE COMMANDE DU TABLEAU DE BORD
+        function deleteOrder(orderId) {
+            ordersList = ordersList.filter(o => o.id !== orderId);
+            renderDashboard();
+        }
+
+        // MISE À JOUR DU DASHBOARD
+        function renderDashboard() {
+            const tbody = document.getElementById('orders-table-body');
+            const noMsg = document.getElementById('no-orders-msg');
+            
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            // Mettre à jour les statistiques
+            const countElem = document.getElementById('dash-stat-count');
+            const motosElem = document.getElementById('dash-stat-motos');
+            const totalElem = document.getElementById('dash-stat-total');
+            const topElem = document.getElementById('dash-stat-top');
+
+            if (countElem) countElem.innerText = ordersList.length;
+            if (motosElem) motosElem.innerText = catalogueMotos.length;
+
+            const totalSum = ordersList.reduce((acc, curr) => acc + curr.totalPrice, 0);
+            if (totalElem) totalElem.innerText = formatFCFA(totalSum);
+
+            // Bestseller
+            if (ordersList.length > 0) {
+                const counts = {};
+                ordersList.forEach(o => counts[o.motoName] = (counts[o.motoName] || 0) + o.quantity);
+                const topMoto = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+                if (topElem) topElem.innerText = topMoto;
+                if (noMsg) noMsg.classList.add('hidden');
+            } else {
+                if (topElem) topElem.innerText = "-";
+                if (noMsg) noMsg.classList.remove('hidden');
+            }
+
+            // Remplir le tableau
+            ordersList.forEach(order => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-white/5 transition-colors";
+                tr.innerHTML = `
+                    <td class="py-4 px-6 font-mono text-xs text-amber-400 font-bold">
+                        ${order.id}<br>
+                        <span class="text-[10px] text-gray-400 font-normal">${order.date}</span>
+                    </td>
+                    <td class="py-4 px-6">
+                        <div class="font-bold text-white">${order.customerName}</div>
+                        <div class="text-xs text-gray-400"><i class="fa-solid fa-phone text-[10px] mr-1"></i>${order.phone}</div>
+                    </td>
+                    <td class="py-4 px-6">
+                        <div class="text-xs text-white">${order.city}</div>
+                        <div class="text-[11px] text-gray-400">${order.neighborhood}</div>
+                    </td>
+                    <td class="py-4 px-6">
+                        <span class="font-bold text-amber-400">${order.motoName}</span>
+                        <span class="text-xs text-gray-400 block">Qté: ${order.quantity} (${order.color})</span>
+                    </td>
+                    <td class="py-4 px-6 font-black text-emerald-400">
+                        ${formatFCFA(order.totalPrice)}
+                    </td>
+                    <td class="py-4 px-6">
+                        <span class="text-xs bg-dark-700 px-2.5 py-1 rounded border border-white/10 font-semibold text-gray-300">
+                            ${order.payment}
+                        </span>
+                    </td>
+                    <td class="py-4 px-6 text-right">
+                        <button onclick="protectedAdminAction(() => deleteOrder('${order.id}'))" class="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors" title="Supprimer la commande">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Affichage dynamique des cartes de motos avec BOUTONS MODIFIER & SUPPRIMER
+        function renderCatalogue() {
+            const grid = document.getElementById('motos-grid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+
+            catalogueMotos.forEach(moto => {
+                const isAvailable = moto.stock === "En stock";
+                const badgeColor = isAvailable 
+                    ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30" 
+                    : "bg-amber-500/20 text-amber-400 border-amber-500/30";
+
+                const cardHTML = `
+                    <div class="card-glass rounded-3xl overflow-hidden border border-white/10 flex flex-col justify-between hover:border-amber-500/40 transition-all duration-300 group">
+                        <div>
+                            <!-- IMAGE ET BADGES -->
+                            <div class="relative h-56 overflow-hidden bg-dark-900">
+                                <img src="${moto.image}" alt="${moto.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/121216/f59e0b?text=AFRIKAN+MOTO'">
+                                <div class="absolute top-4 right-4 flex flex-col gap-2 items-end">
+                                    <span class="text-xs font-bold px-3 py-1 rounded-full border ${badgeColor}">
+                                        ${moto.stock}
+                                    </span>
+                                    <span class="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-emerald-500 text-black shadow-lg flex items-center gap-1">
+                                        <i class="fa-solid fa-truck-fast"></i> Livraison Gratuite (CI)
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- CONTENU MOTO -->
+                            <div class="p-6">
+                                <div class="flex justify-between items-baseline mb-2">
+                                    <h3 class="text-2xl font-black text-white">${moto.name}</h3>
+                                </div>
+                                
+                                <div class="text-2xl font-black text-amber-400 mb-3">
+                                    ${formatFCFA(moto.price)}
+                                </div>
+
+                                <p class="text-xs text-gray-300 leading-relaxed mb-4">
+                                    ${moto.description}
+                                </p>
+
+                                <!-- SPECIFICATIONS -->
+                                <div class="border-t border-white/10 pt-4 mb-4 space-y-2">
+                                    <span class="text-[11px] uppercase tracking-wider text-gray-400 font-bold block mb-1">Points forts :</span>
+                                    <div class="flex items-center text-xs text-emerald-400 font-bold gap-2">
+                                        <i class="fa-solid fa-truck-fast text-xs"></i>
+                                        <span>Livraison 100% GRATUITE partout en CI</span>
+                                    </div>
+                                    ${moto.specs.map(spec => `
+                                        <div class="flex items-center text-xs text-gray-300 gap-2">
+                                            <i class="fa-solid fa-check text-amber-400 text-xs"></i>
+                                            <span>${spec}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BOUTONS D'ACTION -->
+                        <div class="p-6 pt-0 space-y-2">
+                            <button onclick="openOrderModal('${moto.name}', ${moto.price})" class="w-full py-3.5 px-4 rounded-xl font-bold text-black gold-bg-gradient shadow-lg hover:scale-[1.02] transition-transform">
+                                <i class="fa-solid fa-shopping-cart mr-2"></i> Commander cette moto
+                            </button>
+                            
+                            <div class="flex gap-2 pt-1">
+                                <button onclick="protectedAdminAction(() => openEditMotoModal(${moto.id}))" class="flex-1 py-2 px-3 rounded-xl font-semibold text-xs text-amber-400 border border-amber-500/30 bg-dark-800 hover:bg-amber-500/10 transition-colors flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-lock text-[10px]"></i> <i class="fa-solid fa-pen-to-square"></i> Modifier
+                                </button>
+                                <button onclick="protectedAdminAction(() => deleteMoto(${moto.id}))" class="py-2 px-3 rounded-xl font-semibold text-xs text-red-400 border border-red-500/30 bg-dark-800 hover:bg-red-500/10 transition-colors flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-trash"></i> Effacer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+
+            if (document.getElementById('dash-stat-motos')) {
+                document.getElementById('dash-stat-motos').innerText = catalogueMotos.length;
+            }
+        }
+
+        // NAVIGATION & SMOOTH SCROLL
+        function scrollToCatalogue() {
+            document.getElementById('motos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        const btnMobile = document.getElementById('mobile-menu-btn');
+        if (btnMobile) btnMobile.addEventListener('click', toggleMobileMenu);
+
+        // OUVERTURE DU MODAL DE COMMANDE
+        function openOrderModal(motoName, motoPrice) {
+            document.getElementById('order-moto-name').value = motoName;
+            document.getElementById('order-unit-price-val').value = motoPrice;
+            document.getElementById('order-unit-price-display').innerText = formatFCFA(motoPrice);
+            document.getElementById('order-quantity').value = 1;
+            
+            recalculateTotal();
+            document.getElementById('order-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openQuickOrder(motoName, motoPrice) {
+            openOrderModal(motoName, motoPrice);
+        }
+
+        function closeOrderModal() {
+            document.getElementById('order-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function recalculateTotal() {
+            const price = parseFloat(document.getElementById('order-unit-price-val').value) || 0;
+            const qty = parseInt(document.getElementById('order-quantity').value) || 1;
+            const total = price * qty;
+            document.getElementById('order-total-price').innerText = formatFCFA(total);
+        }
+
+        function handleReceptionChange() {
+            const reception = document.getElementById('order-reception').value;
+            const addressInput = document.getElementById('cust-address');
+            const addressReq = document.getElementById('address-req');
+
+            if (reception === "Retrait en point de vente") {
+                addressInput.removeAttribute('required');
+                addressReq.classList.add('hidden');
+                addressInput.placeholder = "Facultatif pour un retrait au point de vente";
+            } else {
+                addressInput.setAttribute('required', 'required');
+                addressReq.classList.remove('hidden');
+                addressInput.placeholder = "Rue / Numéro de rue / Bâtiment";
+            }
+        }
+
+        // GESTION FICHIERS IMAGES LOCALES (Base64 Reader)
+        function previewImageFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Data = e.target.result;
+                    document.getElementById('admin-image-base64').value = base64Data;
+                    document.getElementById('image-preview').src = base64Data;
+                    document.getElementById('image-preview-container').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // FENÊTRE MODALE AJOUT / MODIFICATION DE MOTO
+        function openAddMotoModal() {
+            document.getElementById('moto-form').reset();
+            document.getElementById('edit-moto-id').value = '';
+            document.getElementById('admin-image-base64').value = '';
+            document.getElementById('image-preview-container').classList.add('hidden');
+            document.getElementById('admin-modal-title').innerHTML = `<i class="fa-solid fa-circle-plus"></i> Ajouter un produit`;
+            document.getElementById('admin-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openEditMotoModal(id) {
+            const moto = catalogueMotos.find(m => m.id === id);
+            if (!moto) return;
+
+            document.getElementById('edit-moto-id').value = moto.id;
+            document.getElementById('admin-name').value = moto.name;
+            document.getElementById('admin-price').value = moto.price;
+            document.getElementById('admin-desc').value = moto.description;
+            document.getElementById('admin-stock').value = moto.stock;
+            document.getElementById('admin-image-base64').value = moto.image;
+            
+            if (moto.image) {
+                document.getElementById('image-preview').src = moto.image;
+                document.getElementById('image-preview-container').classList.remove('hidden');
+            }
+
+            document.getElementById('admin-modal-title').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Modifier le produit`;
+            document.getElementById('admin-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function saveMotoForm(event) {
+            event.preventDefault();
+            const editId = document.getElementById('edit-moto-id').value;
+            const name = document.getElementById('admin-name').value.trim();
+            const price = parseFloat(document.getElementById('admin-price').value);
+            const desc = document.getElementById('admin-desc').value.trim();
+            const stock = document.getElementById('admin-stock').value;
+            
+            // Récupérer l'image chargée ou conserver l'image existante ou image par défaut
+            let image = document.getElementById('admin-image-base64').value || DEFAULT_MOTO_IMG;
+
+            if (editId) {
+                // Modification de la moto existante
+                const index = catalogueMotos.findIndex(m => m.id == editId);
+                if (index !== -1) {
+                    catalogueMotos[index].name = name;
+                    catalogueMotos[index].price = price;
+                    catalogueMotos[index].description = desc;
+                    catalogueMotos[index].stock = stock;
+                    if (image) catalogueMotos[index].image = image;
+                }
+            } else {
+                // Ajout d'une nouvelle moto
+                const newMoto = {
+                    id: Date.now(),
+                    name: name,
+                    price: price,
+                    image: image,
+                    description: desc,
+                    specs: ["Moteur testé & garanti", "Basse consommation", "Haute durabilité"],
+                    stock: stock
+                };
+                catalogueMotos.push(newMoto);
+            }
+
+            renderCatalogue();
+            closeAdminModal();
+        }
+
+        function deleteMoto(id) {
+            if (confirm("Êtes-vous sûr de vouloir supprimer cette moto du catalogue ?")) {
+                catalogueMotos = catalogueMotos.filter(m => m.id !== id);
+                renderCatalogue();
+            }
+        }
+
+        // ENVOI WHATSAPP ET ENREGISTREMENT DANS LE DASHBOARD
+        function submitOrderToWhatsApp(event) {
+            event.preventDefault();
+
+            const lastname = document.getElementById('cust-lastname').value.trim();
+            const firstname = document.getElementById('cust-firstname').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const email = document.getElementById('cust-email').value.trim() || 'Non spécifié';
+            const country = document.getElementById('cust-country').value;
+            const city = document.getElementById('cust-city').value.trim();
+            const neighborhood = document.getElementById('cust-neighborhood').value.trim();
+            const address = document.getElementById('cust-address').value.trim() || 'Non spécifiée (Retrait)';
+            const landmark = document.getElementById('cust-landmark').value.trim() || 'Aucun';
+
+            const motoName = document.getElementById('order-moto-name').value;
+            const unitPriceVal = parseFloat(document.getElementById('order-unit-price-val').value);
+            const quantity = parseInt(document.getElementById('order-quantity').value);
+            const totalPriceVal = unitPriceVal * quantity;
+
+            const color = document.getElementById('order-color').value;
+            const reception = document.getElementById('order-reception').value;
+            const payment = document.getElementById('order-payment').value;
+            const comments = document.getElementById('order-comments').value.trim() || 'Aucun';
+
+            // 1. AJOUT DE LA COMMANDE DANS LE DASHBOARD
+            const newOrder = {
+                id: 'CMD-' + Math.floor(1000 + Math.random() * 9000),
+                date: new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }),
+                customerName: `${lastname} ${firstname}`,
+                phone: phone,
+                city: city,
+                neighborhood: neighborhood,
+                motoName: motoName,
+                quantity: quantity,
+                color: color,
+                totalPrice: totalPriceVal,
+                payment: payment
+            };
+
+            ordersList.unshift(newOrder); // Ajouter au début du tableau
+            renderDashboard(); // Re-rendre le tableau de bord immédiatement
+
+            // 2. ENVOI WHATSAPP
+            const rawMessage = 
+`BONJOUR AFRIKAN MOTO !
+NOUVELLE DEMANDE DE COMMANDE (${newOrder.id})
+
+INFORMATIONS DU CLIENT
+Nom : ${lastname}
+Prénom(s) : ${firstname}
+Téléphone : ${phone}
+E-mail : ${email}
+Pays : ${country}
+Ville/Commune : ${city}
+Quartier : ${neighborhood}
+Adresse : ${address}
+Repères : ${landmark}
+
+DÉTAILS DE LA COMMANDE
+Moto choisie : ${motoName}
+Prix unitaire : ${formatFCFA(unitPriceVal)}
+Quantité : ${quantity}
+Mode de livraison : 100% GRATUITE (Partout en Côte d'Ivoire)
+Total estimatif : ${formatFCFA(totalPriceVal)}
+Couleur souhaitée : ${color}
+Mode de réception : ${reception}
+Mode de paiement souhaité : ${payment}
+Commentaires : ${comments}
+
+Merci de me recontacter pour la validation de ma commande.`;
+
+            const encodedMessage = encodeURIComponent(rawMessage);
+            const whatsappURL = `https://wa.me/${SELLER_WHATSAPP}?text=${encodedMessage}`;
+
+            closeOrderModal();
+            window.open(whatsappURL, '_blank');
+        }
+    </script>
+</body>
+</html>
